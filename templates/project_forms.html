@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+    <style>
+        .todo {
+            padding: 20px;
+            margin: 10px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Automation Project Form</h1>
+    <hr>
+    <div class="content">
+    <form method="post">
+        <p>
+            <b><label for="title">Title</label></b>
+        </p>
+        <p>
+            <input type="text" name="title"
+                placeholder="Project Title"></input>
+        </p>
+
+        <p>
+            <b><label for="hyperautomation">Hyperautomation</label></b>
+        </p>
+        <p>
+            <input id="hyperautomation-0" name="hyperautomation" required type="radio" value="Hyperautomation">
+            <label for="hyperautomation-0">Yes</label>
+        </p>
+        <p>
+            <input id="hyperautomation-1" name="hyperautomation" required type="radio" value="Normal">
+            <label for="hyperautomation-1">No</label>
+        </p>
+
+        <p>
+            <b><label for="serialnumber">Serial_Number</label></b>
+        </p>
+        <p>
+            <input type="text" name="serialnumber"
+                placeholder="Serial Number"></input>
+        </p>
+
+        <p>
+            <b><label for="email">email</label></b>
+        </p>
+        <p>
+            <input type="text" name="email"
+                placeholder="E-Mail"></input>
+        </p>
+
+        <p>
+            <b><label for="sql_query">SQL</label></b>
+        </p>
+        <p>
+            
+            <textarea name="sql_query"
+                placeholder=" Your SQL here "
+                rows="15"
+                cols="60"
+                >{{ request.form['sql_query'] }}</textarea>
+        </p>
+
+        <button type="submit">Submit</button>
+    </form>
+    <hr>
+    {% for project in projects %}
+        <div class="project">
+            <p> {{ project['title'] }} <i>({{ project['hyperautomation']}})</i> </p>
+            <p> {{ project['serialnumber'] }} <b>( {{ project['email'] }} )</b> </p>
+            <form method="POST" action="{{ url_for('delete', id=project['_id']) }}" >
+                <input type="submit" value="Delete Project"
+                       onclick="return confirm('Are you sure you want to delete this entry?')">
+            </form>
+        </div>
+    {% endfor %}
+
+    </div>
+</body>
+</html>
